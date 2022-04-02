@@ -18,8 +18,15 @@ const GameBoard = (() => {
             cellArray[i].textContent = gameboard[i];
         }
     }
+    function checkCell(location) {
+        if(gameboard[location] === " ") {
+            return(true);
+        } else {
+            return(false);
+        }
+    }
 
-    return { gameboard, displayBoard };
+    return { gameboard, displayBoard, checkCell };
 })();
 
 const GameController = (() => {
@@ -36,15 +43,18 @@ const GameController = (() => {
         squareArr = document.querySelectorAll(".square");
         for(let i=0; i<squareArr.length; i++) {
             squareArr[i].addEventListener('click', () => {
+                let location = squareArr[i].getAttribute("id");
                 console.log("click -- " + squareArr[i].getAttribute("id"));
-                if(lastPlayed === "O") {
-                    playerOne.playTurn(squareArr[i].getAttribute("id"));
-                    GameBoard.displayBoard();
-                    lastPlayed = "X";
-                } else {
-                    playerTwo.playTurn(squareArr[i].getAttribute("id"));
-                    GameBoard.displayBoard();
-                    lastPlayed = "O";
+                if(GameBoard.checkCell(location)) {
+                    if(lastPlayed === "O") {
+                        playerOne.playTurn(location);
+                        GameBoard.displayBoard();
+                        lastPlayed = "X";
+                    } else {
+                        playerTwo.playTurn(location);
+                        GameBoard.displayBoard();
+                        lastPlayed = "O";
+                    }
                 }
             });
         }

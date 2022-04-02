@@ -1,13 +1,31 @@
+body {
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    height: 950px;
+}
+
 #gameboard-container {
-    height: 600px;
+    height: 400px;
+    width: 600px;
     display: grid;
     grid-template: 1fr 1fr 1fr / 1fr 1fr 1fr;
+    background-color: whitesmoke;
 }
 
 .square {
-    border: solid;
     display: grid;
     align-items: center;
     justify-content: center;
     font-size: 50px;
 }
+
+#gameboard-container .left, #gameboard-container .centre{
+    border-right: solid black 3px;
+}
+
+#gameboard-container .middle {
+    border-top: solid black 3px;
+    border-bottom: solid black 3px;
+}
+

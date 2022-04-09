@@ -1,17 +1,26 @@
+//logic is all kinds of messed up, may need to rebuild with more OOP care
+
 const playerFactory = (name, x) => {
     return {name, x, playTurn};
 
     function playTurn(location) {
+        console.log(GameBoard.gameboard);
+        console.log("playTurn called");
+        console.log(GameBoard.gameboard[location]);
+        console.log(x);
         GameBoard.gameboard[location] = x;
         GameController.checkGameOver();
     }
 }
 
 const GameBoard = (() => {
+    let lastPlayed = "O";
+
     //const gameboard = new Array(9);
-    const gameboard = ["X", "O", " ", "X", " ", "O", " ", " ", " "];
+    let gameboard = [" ", " ", " ", " ", " ", " ", " ", " ", " "];
 
     function displayBoard() {
+        console.log("displayBoard called");
         const cellArray = document.querySelectorAll(".square");
         for(let i=0; i<9; i++) {
             cellArray[i].textContent = gameboard[i];
@@ -72,21 +81,54 @@ const GameBoard = (() => {
         return(match);
     }
 
-    return { gameboard, displayBoard, checkCell, checkWin, checkTie, checkArray };
+    function setupEventListeners() {
+        const cellArray = document.querySelectorAll(".square");
+        for(let i=0; i<cellArray.length; i++) {
+            cellArray[i].addEventListener('click', () => {
+                console.log("event listener triggered");
+                let location = cellArray[i].getAttribute("data-attribute");
+                if(checkCell(location)) {
+                    console.log(gameboard);
+                    console.log(lastPlayed);
+                    if(lastPlayed == "O") {
+                        console.log("O path");
+                        playerOne.playTurn(location);
+                        displayBoard();
+                        lastPlayed = "X";
+                    } else {
+                        console.log("X path");
+                        playerTwo.playTurn(location);
+                        GameBoard.displayBoard();
+                        lastPlayed = "O";
+                    }
+                    console.log(gameboard);
+                }
+            });
+        }
+
+        let returnButton = document.querySelector("#restart-button");
+        returnButton.addEventListener('click', () => {
+            console.log("click");
+            gameboard = [" ", " ", " ", " ", " ", " ", " ", " ", " "];
+            console.log(gameboard)
+            displayBoard();
+        });
+    }
+
+    return { gameboard, displayBoard, checkCell, checkWin, checkTie, checkArray, setupEventListeners };
 })();
 
 const GameController = (() => {
-    let lastPlayed = "O";
 
     function playGame() {
         playerOne = playerFactory("One", "X");
         playerTwo = playerFactory("Two", "O");
         GameBoard.displayBoard();
-        GameController.initializeClickEvents(playerOne, playerTwo);
+        GameBoard.setupEventListeners(playerOne, playerTwo);
     }
 
     function initializeClickEvents(playerOne, playerTwo) {
-        squareArr = document.querySelectorAll(".square");
+        let squareArr = document.querySelectorAll(".square");
         for(let i=0; i<squareArr.length; i++) {
             squareArr[i].addEventListener('click', () => {
                 let location = squareArr[i].getAttribute("data-attribute");
@@ -103,6 +145,15 @@ const GameController = (() => {
                 }
             });
         }
+
+        let returnButton = document.querySelector("#restart-button");
+        returnButton.addEventListener('click', () => {
+            console.log("click");
+            console.log(GameBoard.gameboard);
+            GameBoard.gameboard = [" ", " ", " ", " ", " ", " ", " ", " ", " "];
+            console.log(GameBoard.gameboard);
+            GameBoard.displayBoard();
+        });
     }
 
     function checkGameOver() {

@@ -1,8 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
 body {
+    display: grid;
+    grid-template-rows: 1fr 400px 1fr;
+    gap: 50px;
+    height: 950px;
+    font-family: "Press Start 2P";
+}
+
+#header {
+    height: 100%;
+    display: grid;
+    justify-content: center;
+    align-items:flex-end;
+}
+
+#header h1 {
+    font-size: 50px;
+    
+}
+
+#middle {
     display: grid;
     align-items: center;
     justify-content: center;
-    height: 950px;
 }
 
 #gameboard-container {
@@ -29,3 +50,63 @@ body {
     border-bottom: solid black 3px;
 }
 
+#footer {
+    height: 100%;
+    display: grid;
+    grid-template-columns: 400px 250px 400px;
+    justify-content: space-around;
+}
+
+#restart-container button {
+    width: 250px;
+    height: 70px;
+    font-family: "Press Start 2P";
+    font-size: 21px;
+}
+
+.player-container #left img {
+    height: 75px;
+}
+
+.player-container #left {
+    display: grid;
+    justify-content: center;
+    align-items: center;
+}
+
+.player-container {
+    height: 76px;
+    width: 400px;
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    gap: 15px;
+}
+
+
+.player-container input {
+    height: 70px;
+    font-size: 24px;
+    width: 318px;
+    font-family: "Press Start 2P";
+    border: none;
+}
+
+.winner-display {
+    background-color: rgba(161, 164, 168, 1);
+    border: solid;
+    text-align: center;
+    width: 395px;
+    height: 300px;
+    position: absolute;
+    left: 50%;
+    margin-left: -197.5px;
+    top: 50%;
+    margin-top: -175px;
+    display: grid;
+    align-items: center;
+}
+
+.winner-display h3 {
+    line-height: 1.45;
+    
+}
